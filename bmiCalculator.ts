@@ -1,10 +1,5 @@
 import parseArgs from './parseArgs';
 
-interface Meters {
-  height: number;
-  weight: number;
-}
-
 const calculateBmi = (height: number, weight: number) => {
   const bmi = (weight / (height * height)) * 10000;
 
@@ -18,9 +13,16 @@ const calculateBmi = (height: number, weight: number) => {
 };
 
 try {
-  const { height, weight } = parseArgs(process.argv);
+  const result = parseArgs(process.argv);
 
-  console.log(calculateBmi(height, weight));
+  if ('height' in result && 'weight' in result) {
+    const { height, weight } = result;
+
+    console.log(calculateBmi(height, weight));
+  } else {
+    throw new Error ('Given arguments were incorrect!');
+  }
+
 } catch (error: unknown) {
   let errorMessage = 'Something went wrong';
   if (error instanceof Error) {
