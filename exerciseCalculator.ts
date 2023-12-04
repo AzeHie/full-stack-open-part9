@@ -1,36 +1,43 @@
+import parseArgs from './parseArgs';
+
 interface results {
-  periodLength: number,
-  trainingDays: number,
-  target: number,
-  averageTime: number,
-  success: boolean,
-  rating: number,
-  ratingDescription: string
+  periodLength: number;
+  trainingDays: number;
+  target: number;
+  averageTime: number;
+  success: boolean;
+  rating: number;
+  ratingDescription: string;
 }
 
-const calculateExercises = (dailyExercises: number[], target: number): results => {
-  const trainingDays = dailyExercises.filter(e => e > 0).length;
+const calculateExercises = (
+  dailyExercises: number[],
+  target: number
+): results => {
+  console.log('moi exercisestä');
+  const trainingDays = dailyExercises.filter((e) => e > 0).length;
 
-  const trainingHours: number = dailyExercises.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue;
-  }, 0);
+  const trainingHours: number = dailyExercises.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue;
+    },
+    0
+  );
 
   const averageTime = trainingHours / dailyExercises.length;
 
-  const success = averageTime < target ? true : false;
+  const success = averageTime > target ? true : false;
 
   let rating: number;
   let ratingDescription: string;
 
   if (averageTime < target * 0.5) {
     rating = 1;
-    ratingDescription = 'You suck!'
-  } 
-  else if (averageTime > target * 0.5 && averageTime < target) {
+    ratingDescription = 'You suck!';
+  } else if (averageTime > target * 0.5 && averageTime < target) {
     rating = 2;
-    ratingDescription = 'Pretty good, but could be better'
-  }
-  else {
+    ratingDescription = 'Pretty good, but could be better';
+  } else {
     rating = 3;
     ratingDescription = 'Absolutely perfect!!';
   }
@@ -43,7 +50,16 @@ const calculateExercises = (dailyExercises: number[], target: number): results =
     success: success,
     rating: rating,
     ratingDescription: ratingDescription,
-  }
+  };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { dailyExercises, target } = parseArgs(process.argv);
+
+  console.log(calculateExercises(dailyExercises, target));
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong';
+  if (error instanceof Error) {
+    errorMessage += 'Error ' + error.message;
+  }
+}
