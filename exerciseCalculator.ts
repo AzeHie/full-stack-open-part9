@@ -54,6 +54,7 @@ const calculateExercises = (
 };
 
 try {
+  // instead of numbers, we expect array of numbers as argument for dailyExercises (eg. "[1, 2, 3, 4]", instead of 1 2 3 4).
   const { dailyExercises, target } = parseArgs(process.argv);
 
   console.log(calculateExercises(dailyExercises, target));
