@@ -1,6 +1,5 @@
 const calculateBmi = (weight: number, height: number) => {
- const squaredHeight = height * height;
- const bmi = weight / squaredHeight;
+ const bmi = weight / (height*height) * 10000;
 
  if (bmi > 29.9) {
   return 'Obese'
@@ -13,4 +12,4 @@ const calculateBmi = (weight: number, height: number) => {
  }
 };
 
-console.log(calculateBmi(180, 74));
+console.log(calculateBmi(120, 180));
