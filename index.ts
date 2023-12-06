@@ -1,5 +1,5 @@
 import express = require('express');
-import calculateWebBmi from './webBMI';
+import calculateWebBmi from './webBmi';
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.get('/bmi', (req, res) => {
   }
 
   const { height, weight } = req.query;
+
 
   if (!height || !weight || isNaN(Number(height)) || isNaN(Number(weight))) {
     res.status(400).json('malformatted parameters');
