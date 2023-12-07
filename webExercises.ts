@@ -1,5 +1,3 @@
-import parseArgs from './parseArgs';
-
 interface results {
   periodLength: number;
   trainingDays: number;
@@ -10,10 +8,7 @@ interface results {
   ratingDescription: string;
 }
 
-const calculateExercises = (
-  dailyExercises: number[],
-  target: number
-): results => {
+const calculateWebExercises = (dailyExercises: number[], target: number): results => {
   const trainingDays = dailyExercises.filter((e) => e > 0).length;
 
   const trainingHours: number = dailyExercises.reduce(
@@ -52,23 +47,4 @@ const calculateExercises = (
   };
 };
 
-try {
-  // instead of numbers, we expect array of numbers as argument for dailyExercises (eg. "[1, 2, 3, 4]", instead of 1 2 3 4).
-  const result = parseArgs(process.argv);
-
-  if ('dailyExercises' in result && 'target' in result) {
-    const { dailyExercises, target } = result;
-    console.log(calculateExercises(dailyExercises, target));
-  } else {
-    throw new Error ('Given arguments were not correct!');
-  }
-
-} catch (error: unknown) {
-  let errorMessage;
-  errorMessage = 'Something went wrong';
-  if (error instanceof Error) {
-    errorMessage = `${errorMessage} Error ${error.message}`;
-    throw new Error(errorMessage);
-  }
-  throw new Error(errorMessage);
-}
+export default calculateWebExercises;

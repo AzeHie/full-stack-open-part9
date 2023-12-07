@@ -22,10 +22,12 @@ try {
   } else {
     throw new Error ('Given arguments were incorrect!');
   }
-
 } catch (error: unknown) {
-  let errorMessage = 'Something went wrong';
+  let errorMessage;
+  errorMessage = 'Something went wrong';
   if (error instanceof Error) {
-    errorMessage += 'Error ' + error.message;
+    errorMessage = `${errorMessage} Error ${error.message}`;
+    throw new Error(errorMessage);
   }
+  throw new Error(errorMessage);
 }
