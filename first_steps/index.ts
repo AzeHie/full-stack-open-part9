@@ -62,7 +62,7 @@ app.post('/exercises', (req, res) => {
 
     res.status(200).json(result);
   } catch (err) {
-    res.status(500).json('something went wrong');
+    res.status(500).json('Something went wrong');
   }
 });
 
