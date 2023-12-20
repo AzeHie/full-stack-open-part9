@@ -5,20 +5,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const patientService_1 = __importDefault(require("../services/patientService"));
+const utils_1 = __importDefault(require("../util/utils"));
 const router = express_1.default.Router();
 router.get('/', (_req, res) => {
-    const NonSensitivePatientDetails = patientService_1.default.getNonSensitivePatientDetails();
-    res.status(200).json(NonSensitivePatientDetails);
+    try {
+        const NonSensitivePatientDetails = patientService_1.default.getNonSensitivePatientDetails();
+        res.status(200).json(NonSensitivePatientDetails);
+    }
+    catch (error) {
+        let errorMessage = 'Something went wrong';
+        if (error instanceof Error) {
+            errorMessage += ' Error: ' + error.message;
+        }
+    }
 });
 router.post('/', (req, res) => {
-    const { name, dateOfBirth, ssn, gender, occupation } = req.body;
-    const addedPatient = patientService_1.default.addPatient({
-        name,
-        dateOfBirth,
-        ssn,
-        gender,
-        occupation
-    });
-    res.status(200).json(addedPatient);
+    try {
+        const newPatientEntry = (0, utils_1.default)(req.body);
+        const addedPatient = patientService_1.default.addPatient(newPatientEntry);
+        res.status(200).json(addedPatient);
+    }
+    catch (error) {
+        let errorMessage = 'Failed to add new patient';
+        if (error instanceof Error) {
+            errorMessage += ' Error: ' + error.message;
+        }
+        res.status(500).json(errorMessage);
+    }
 });
 exports.default = router;

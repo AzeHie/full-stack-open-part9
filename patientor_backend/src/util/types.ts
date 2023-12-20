@@ -2,7 +2,7 @@ export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
-};
+}
 
 export interface Patient {
   id: string;
@@ -10,9 +10,15 @@ export interface Patient {
   dateOfBirth: string;
   ssn: string;
   gender: string;
-  occupation: string
+  occupation: string;
 }
 
 export type NonSensitivePatientDetails = Omit<Patient, 'ssn'>;
 
 export type NewPatientEntry = Omit<Patient, 'id'>;
+
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+  Other = 'other',
+}
