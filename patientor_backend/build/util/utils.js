@@ -11,8 +11,11 @@ const parseString = (param) => {
     }
     return param;
 };
+// using typescrit enum
 const isGender = (param) => {
-    return Object.values(types_1.Gender).map(v => v.toString()).includes(param);
+    return Object.values(types_1.Gender)
+        .map((v) => v.toString())
+        .includes(param);
 };
 const parseGender = (gender) => {
     if (!gender || !isString(gender) || !isGender(gender)) {
@@ -33,13 +36,17 @@ const toNewPatientEntry = (object) => {
     if (!object || typeof object !== 'object') {
         throw new Error('Incorrect or missing data');
     }
-    if ('name' in object && 'dateOfBirth' in object && 'ssn' in object && 'gender' in object && 'occupation' in object) {
+    if ('name' in object &&
+        'dateOfBirth' in object &&
+        'ssn' in object &&
+        'gender' in object &&
+        'occupation' in object) {
         const newEntry = {
             name: parseString(object.name),
             dateOfBirth: parseDateOfBirth(object.dateOfBirth),
             ssn: parseString(object.ssn),
             gender: parseGender(object.gender),
-            occupation: parseString(object.occupation)
+            occupation: parseString(object.occupation),
         };
         return newEntry;
     }

@@ -13,6 +13,7 @@ const parseString = (param: unknown): string => {
   return param;
 };
 
+// using typescrit enum
 const isGender = (param: string): param is Gender => {
   return Object.values(Gender)
     .map((v) => v.toString())
