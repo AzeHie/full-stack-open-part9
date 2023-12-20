@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const diagnoseService_1 = __importDefault(require("../services/diagnoseService"));
 const router = express_1.default.Router();
 router.get('/', (_req, res) => {
-    console.log('Fetching diagnoses');
     const diagnosesData = diagnoseService_1.default.getDiagnoses();
     res.status(200).json(diagnosesData);
 });
