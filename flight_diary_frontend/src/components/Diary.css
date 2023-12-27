@@ -1,0 +1,26 @@
+.diary__table {
+  width: 50%;
+  border: 1px solid black;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.diary__thead {
+  background-color: rgb(136, 134, 163);
+  border: 1px solid black;
+}
+
+.diary__thead th {
+  padding: 5px;
+}
+
+.diary__tbody {
+  background: rgb(188, 188, 188);
+}
+
+.diary__tbody td {
+  padding: 3px;
+  border-bottom: 1px solid black;
+}
+
+
