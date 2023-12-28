@@ -1,0 +1,16 @@
+.new-diary-entry__form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.new-diary-entry__form input {
+  margin-bottom: 5px;
+}
+
+.new-diary-entry__form button {
+  width: 25%;
+  cursor: pointer;
+  margin-top: 3px;
+  margin-right: 2px;
+}

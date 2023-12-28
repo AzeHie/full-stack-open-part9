@@ -1,8 +1,13 @@
 import axios from 'axios';
-import { Fragment, useEffect, useState } from 'react';
-import './App.css';
-import { DiaryEntry } from './utils/Types';
+import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import Diary from './components/Diary';
+import MainHeader from './components/MainHeader';
+import { DiaryEntry } from './utils/Types';
+import NewDiaryEntry from './components/NewDiaryEntry';
+
+import './App.css';
 
 const App = () => {
   const [diary, setDiary] = useState<DiaryEntry[]>([]);
@@ -14,9 +19,11 @@ const App = () => {
           `http://localhost:3000/api/diaries`
         );
 
-        const sortedData = result.data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        console.log(sortedData);
-        setDiary(result.data);
+        const sortedData = result.data.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+
+        setDiary(sortedData);
       } catch (err) {
         console.log(err);
         throw new Error('Something went wrong!');
@@ -26,10 +33,18 @@ const App = () => {
     fetchDiary();
   }, []);
 
+  const routes = (
+    <Routes>
+      <Route path='/' element={ <Diary diaryEntries={diary} />} />
+      <Route path='/addentry' element={ <NewDiaryEntry />} />
+    </Routes>
+  )
+
   return (
-    <Fragment>
-      <Diary diaryEntries={diary} />
-    </Fragment>
+      <div className='app__container'>
+        <MainHeader />
+        <main>{routes}</main>
+      </div>
   );
 };
 
