@@ -1,5 +1,5 @@
 export interface DiaryEntry {
-  id: number;
+  id?: number;
   date: string;
   weather: string;
   visibility: string;
