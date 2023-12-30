@@ -1,3 +1,12 @@
-.mainheader__link {
+.main-header__link {
   text-decoration: none;
+  color: white;
+}
+
+.main-header__link:hover {
+  background: rgb(22, 38, 179);
+}
+
+.main-header__link.active {
+  color: yellow;
 }

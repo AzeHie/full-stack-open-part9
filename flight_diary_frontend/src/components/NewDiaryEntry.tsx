@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import './NewDiaryEntry.css';
 import DiaryService from '../services/DiaryService';
+import './NewDiaryEntry.css';
+import { useNavigate } from 'react-router-dom';
 
-const NewDiaryEntry = () => {
+interface NewDiaryProps {
+  reFetchDiary: () => void;
+  newNotification: (message: string, style: string) => void;
+}
+
+const NewDiaryEntry = (props: NewDiaryProps) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     date: '',
     weather: '',
@@ -15,10 +23,18 @@ const NewDiaryEntry = () => {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    DiaryService.newEntry(formData);
+    const result = await DiaryService.newEntry(formData, props.newNotification);
+
+    // Don't continue if error occurred
+    if (result === 'error occurred') {
+      throw new Error('Failed to add new data');
+    }
+
+    props.reFetchDiary();
+    navigate('/');
   };
 
   return (

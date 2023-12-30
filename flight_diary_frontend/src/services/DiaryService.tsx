@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DiaryEntry } from '../utils/Types';
 
-const getAll = async () => {
+const getAll = async (newNotification: (message: string, style: string) => void) => {
   try {
     const result = await axios.get<DiaryEntry[]>(
       `http://localhost:3000/api/diaries`
@@ -14,11 +14,11 @@ const getAll = async () => {
     return sortedData;
   } catch (err) {
     console.log(err);
-    throw new Error('Something went wrong!');
+    newNotification('Failed to fetch diary, please try again!', 'error');
   }
 };
 
-const newEntry = async (entryData: DiaryEntry) => {
+const newEntry = async (entryData: DiaryEntry, newNotification: (message: string, style: string) => void) => {
   console.log(entryData);
 
   try {
@@ -36,10 +36,11 @@ const newEntry = async (entryData: DiaryEntry) => {
         errorMessage = err.response.data as string;
       }
 
-      throw new Error(`Failed to add new diary entry. ${errorMessage}`);
+      newNotification(`Failed to add new diary entry ${errorMessage}`, 'error');
     } else {
-      throw new Error('Something went wrong!');
+      newNotification('Something went wrong!', 'error');
     }
+    return 'error occurred';
   }
 };
 

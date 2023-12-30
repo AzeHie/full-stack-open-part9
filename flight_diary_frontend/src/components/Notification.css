@@ -1,0 +1,16 @@
+.notification__error {
+  color: red;
+  background: rgb(255, 190, 190);
+}
+
+.notification__success {
+  color: green;
+  background: rgb(172, 255, 172);
+}
+
+.notification__error,
+.notification__success {
+  padding: 20px;
+  width: auto;
+  font-weight: bold;
+}
