@@ -1,5 +1,5 @@
 .diary__table {
-  width: 50%;
+  width: 75%;
   border: 1px solid black;
   text-align: center;
   border-collapse: collapse;
@@ -19,7 +19,7 @@
 }
 
 .diary__tbody td {
-  padding: 3px;
+  padding: 10px;
   border-bottom: 1px solid black;
 }
 

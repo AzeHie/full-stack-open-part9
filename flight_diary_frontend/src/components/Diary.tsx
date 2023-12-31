@@ -17,6 +17,7 @@ const Diary = (props: DiaryProps) => {
             <th>Date</th>
             <th>Visibility</th>
             <th>Weather</th>
+            <th>Comment</th>
           </tr>
         </thead>
         <tbody className='diary__tbody'>
@@ -25,6 +26,7 @@ const Diary = (props: DiaryProps) => {
               <td>{e.date}</td>
               <td>{e.visibility}</td>
               <td>{e.weather}</td>
+              <td>{e.comment}</td>
             </tr>
           ))}
         </tbody>

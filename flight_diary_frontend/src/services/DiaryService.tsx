@@ -11,6 +11,8 @@ const getAll = async (newNotification: (message: string, style: string) => void)
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
+    console.log(sortedData);
+
     return sortedData;
   } catch (err) {
     console.log(err);
@@ -26,6 +28,8 @@ const newEntry = async (entryData: DiaryEntry, newNotification: (message: string
       'http://localhost:3000/api/diaries',
       entryData
     );
+
+    newNotification('New entry added successfully!', 'success');
 
     return result;
   } catch (err: unknown) {

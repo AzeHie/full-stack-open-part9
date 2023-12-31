@@ -1,22 +1,24 @@
 import './Notification.css';
 
 interface NotificationProps {
-  message: string,
+  message: string;
   style: string;
+  clearNotification: () => void;
 }
 
 const Notification = (props: NotificationProps) => {
-  const {message, style} = props;
+  const { message, style, clearNotification } = props;
 
   if (!message) {
     return null;
   }
 
   return (
-    <div>
-      <p className={`notification__${style}`}>{message}</p>
+    <div className={`notification__${style}`}>
+      <p>{message} </p>
+      <button onClick={clearNotification}>Close</button>
     </div>
-  )
+  );
 };
 
 export default Notification;

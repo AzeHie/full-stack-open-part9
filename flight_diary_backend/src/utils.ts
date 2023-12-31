@@ -62,6 +62,7 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => {
     return newEntry;
   }
 
+  
   throw new Error('Incorrect data: a field missing');
 };
 

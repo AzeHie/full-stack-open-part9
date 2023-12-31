@@ -10,7 +10,40 @@
 
 .notification__error,
 .notification__success {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
   padding: 20px;
   width: auto;
   font-weight: bold;
 }
+
+.notification__success button,
+.notification__error button {
+  color: red;
+  background: rgb(255, 167, 167);
+  height: 50%;
+  align-self: center;
+  cursor: pointer;
+}
+
+.notification__success button {
+  color: green;
+  background: rgb(118, 243, 118);
+  border: 1px solid green;
+}
+
+.notification__error button {
+  color: red;
+  background: rgb(255, 167, 167);
+  border: 1px solid red;
+}
+
+
+
+
+
+
+
+

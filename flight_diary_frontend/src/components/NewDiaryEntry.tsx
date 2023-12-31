@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import DiaryService from '../services/DiaryService';
-import './NewDiaryEntry.css';
 import { useNavigate } from 'react-router-dom';
+
+import './NewDiaryEntry.css';
 
 interface NewDiaryProps {
   reFetchDiary: () => void;
@@ -42,28 +43,109 @@ const NewDiaryEntry = (props: NewDiaryProps) => {
       <form onSubmit={handleSubmit} className='new-diary-entry__form'>
         <label htmlFor='date'>Date:</label>
         <input
+          className='new-diary-entry__date-input'
           type='date'
           id='date'
           name='date'
           value={formData.date}
           onChange={handleChange}
         />
-        <label htmlFor='weather'>Weather</label>
-        <input
-          type='text'
-          id='weather'
-          name='weather'
-          value={formData.weather}
-          onChange={handleChange}
-        />
-        <label htmlFor='visibility'>Visibility:</label>
-        <input
-          type='text'
-          id='visibility'
-          name='visibility'
-          value={formData.visibility}
-          onChange={handleChange}
-        />
+        <fieldset>
+          <legend>Weather</legend>
+          <label>
+            <input
+              type='radio'
+              name='weather'
+              value='sunny'
+              checked={formData.weather === 'sunny'}
+              onChange={handleChange}
+            />
+            Sunny
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='weather'
+              value='rainy'
+              checked={formData.weather === 'rainy'}
+              onChange={handleChange}
+            />
+            Rainy
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='weather'
+              value='cloudy'
+              checked={formData.weather === 'cloudy'}
+              onChange={handleChange}
+            />
+            Cloudy
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='weather'
+              value='stormy'
+              checked={formData.weather === 'stormy'}
+              onChange={handleChange}
+            />
+            Stormy
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='weather'
+              value='windy'
+              checked={formData.weather === 'windy'}
+              onChange={handleChange}
+            />
+            Windy
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Visibility</legend>
+          <label>
+            <input
+              type='radio'
+              name='visibility'
+              value='great'
+              checked={formData.visibility === 'great'}
+              onChange={handleChange}
+            />
+            Great
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='visibility'
+              value='good'
+              checked={formData.visibility === 'good'}
+              onChange={handleChange}
+            />
+            Good
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='visibility'
+              value='ok'
+              checked={formData.visibility === 'ok'}
+              onChange={handleChange}
+            />
+            Ok
+          </label>
+          <label>
+            <input
+              type='radio'
+              name='visibility'
+              value='poor'
+              checked={formData.visibility === 'poor'}
+              onChange={handleChange}
+            />
+            Poor
+          </label>
+        </fieldset>
         <label htmlFor='comment'>Comment:</label>
         <input
           type='text'

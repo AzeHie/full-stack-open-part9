@@ -24,6 +24,11 @@ const App = () => {
     }, 9000);
   };
 
+  const clearNotificationManually = () => {
+    setMessage('');
+    setNotificationStyle('');
+  }
+
   const reFetchDiary = useCallback(async () => {
     const diaryData = await DiaryService.getAll(newNotification);
 
@@ -60,7 +65,7 @@ const App = () => {
   return (
       <div className='app__container'>
         <MainHeader />
-        <Notification message={message} style={notificationStyle}/>
+        <Notification message={message} style={notificationStyle} clearNotification={clearNotificationManually}/>
         <main>{routes}</main>
       </div>
   );
