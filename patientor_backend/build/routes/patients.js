@@ -33,4 +33,19 @@ router.post('/', (req, res) => {
         res.status(500).json(errorMessage);
     }
 });
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    try {
+        const patientDetails = patientService_1.default.getPatientDetails(id);
+        console.log(patientDetails);
+        res.status(200).json(patientDetails);
+    }
+    catch (err) {
+        let errorMessage = 'Something went wrong';
+        if (err instanceof Error) {
+            errorMessage += ' Error: ' + err.message;
+        }
+        res.status(500).json(errorMessage);
+    }
+});
 exports.default = router;

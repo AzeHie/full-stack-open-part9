@@ -15,6 +15,10 @@ const getNonSensitivePatientDetails = () => {
         occupation
     }));
 };
+const getPatientDetails = (id) => {
+    const patientDetails = patients_1.default.filter((p) => id === p.id);
+    return patientDetails;
+};
 const addPatient = (entry) => {
     const newPatientEntry = Object.assign({ id: (0, uuid_1.v4)() }, entry);
     patients_2.default.push(newPatientEntry);
@@ -28,5 +32,6 @@ const addPatient = (entry) => {
 };
 exports.default = {
     getNonSensitivePatientDetails,
+    getPatientDetails,
     addPatient
 };
