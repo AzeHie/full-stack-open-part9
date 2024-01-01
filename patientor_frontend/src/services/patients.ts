@@ -12,7 +12,6 @@ const getAll = async () => {
 };
 
 const getPatientById = async (id: string) => {
-  console.log('id: ', id);
   const { data } = await axios.get<Patient>(
     `${apiBaseUrl}/patients/${id}`
   );
