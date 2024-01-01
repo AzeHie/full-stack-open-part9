@@ -1,3 +1,12 @@
+export interface Entries {
+  id: string;
+  date: string;
+  type: string;
+  specialist: string;
+  description: string;
+  diagnosisCodes?: Array<Diagnosis['code']>
+}
+
 export interface Diagnosis {
   code: string;
   name: string;
@@ -17,6 +26,7 @@ export interface Patient {
   gender: Gender;
   ssn?: string;
   dateOfBirth?: string;
+  entries: Array<Entries>;
 }
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
