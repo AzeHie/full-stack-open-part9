@@ -6,11 +6,12 @@ import { CgGenderFemale } from 'react-icons/cg';
 import { CgGenderMale } from 'react-icons/cg';
 
 import patientService from '../../services/patients';
+import EntryDetails from './EntryDetails/index';
 
 import './index.css';
 
 interface PatientPageProps {
-  diagnoses: Diagnosis[]
+  diagnoses: Diagnosis[];
 }
 
 const PatientPage = ({ diagnoses }: PatientPageProps) => {
@@ -52,22 +53,15 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
       <p>ssn: {patientDetails.ssn}</p>
       <p>occupation: {patientDetails.occupation}</p>
       <div>
-        <h3>entries</h3>
-        {patientDetails.entries.map((e) => (
-          <div key={e.id}>
-            <p>
-              {e.date} {e.description}
-            </p>
-            <ul>
-              {e.diagnosisCodes?.map((code) => (
-                <li key={code}>
-                  {code}{' '}
-                  {diagnoses.find((d) => d.code === code)?.name || 'Diagnosis is undefined'}
-                </li>
-              ))}
-            </ul>
+        {patientDetails.entries.length > 0 && (
+          <div>
+            <h3>entries</h3>
+            <EntryDetails
+              entries={patientDetails.entries}
+              diagnoses={diagnoses}
+            />
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
