@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Patient } from '../../types';
+import { Diagnosis, Patient } from '../../types';
 import { FaGenderless } from 'react-icons/fa';
 import { CgGenderFemale } from 'react-icons/cg';
 import { CgGenderMale } from 'react-icons/cg';
@@ -9,7 +9,11 @@ import patientService from '../../services/patients';
 
 import './index.css';
 
-const PatientPage = () => {
+interface PatientPageProps {
+  diagnoses: Diagnosis[]
+}
+
+const PatientPage = ({ diagnoses }: PatientPageProps) => {
   const { id } = useParams<{ id: string }>();
   const [patientDetails, setPatientDetails] = useState<Patient>();
   const [genderIcon, setGenderIcon] = useState<React.ReactElement | null>(null);
@@ -50,13 +54,16 @@ const PatientPage = () => {
       <div>
         <h3>entries</h3>
         {patientDetails.entries.map((e) => (
-          <div>
+          <div key={e.id}>
             <p>
               {e.date} {e.description}
             </p>
             <ul>
-              {e.diagnosisCodes?.map((d) => (
-                <li>{d}</li>
+              {e.diagnosisCodes?.map((code) => (
+                <li key={code}>
+                  {code}{' '}
+                  {diagnoses.find((d) => d.code === code)?.name || 'Diagnosis is undefined'}
+                </li>
               ))}
             </ul>
           </div>
