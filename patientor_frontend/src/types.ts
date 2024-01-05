@@ -1,5 +1,5 @@
 export interface Entry {
-  id: string;
+  id?: string;
   date: string;
   type: string;
   specialist: string;
