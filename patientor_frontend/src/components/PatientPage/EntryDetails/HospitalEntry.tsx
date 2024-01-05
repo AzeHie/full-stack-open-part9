@@ -22,18 +22,24 @@ const HospitalEntryComponent = ({ entry, diagnoses }: HospitalEntryProps) => {
         <b>Date of discharge:</b> {entry.discharge.date} -{' '}
         {entry.discharge.criteria}
       </p>
-      <h4>Diagnoses:</h4>
-      <ul>
-        {entry.diagnosisCodes?.map((code) => (
-          <li key={code}>
-            {code}{' '}
-            {diagnoses.find((d) => d.code === code)?.name ||
-              'Diagnosis is undefined'}
-          </li>
-        ))}
-      </ul>
+      {entry.diagnosisCodes && (
+        <div>
+          <h4>Diagnoses:</h4>
+          <ul>
+            {entry.diagnosisCodes?.map((code) => (
+              <li key={code}>
+                {code}{' '}
+                {diagnoses.find((d) => d.code === code)?.name ||
+                  'Diagnosis is undefined'}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <p>
-        <b><i>Diagnose by {entry.specialist}</i></b>
+        <b>
+          <i>Diagnose by {entry.specialist}</i>
+        </b>
       </p>
     </div>
   );

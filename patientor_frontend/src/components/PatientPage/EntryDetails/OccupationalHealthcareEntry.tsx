@@ -15,33 +15,39 @@ const OccupationalHealthcareEntryComponent = ({ entry, diagnoses }: Props) => {
         {entry.date} <HealthAndSafetyOutlinedIcon />
       </p>
       <p>
-        <b>Specialist:</b> {entry.specialist}
+        <i>{entry.description}</i>
       </p>
       <p>
         <b>Employer name:</b> {entry.employerName}
       </p>
-      <p>
-        <i>{entry.description}</i>
-      </p>
       {entry.sickLeave && (
-        <p>
+        <div>
           <b>Sick leave:</b>
           <ul>
             <li>Start: {entry.sickLeave.startDate}</li>
             <li>End: {entry.sickLeave.endDate}</li>
           </ul>
-        </p>
+        </div>
       )}
-        <p><b>Diagnoses:</b></p>
-      <ul>
-        {entry.diagnosisCodes?.map((code) => (
-          <li key={code}>
-            {code}{' '}
-            {diagnoses.find((d) => d.code === code)?.name ||
-              'Diagnosis is undefined'}
-          </li>
-        ))}
-      </ul>
+      {entry.diagnosisCodes && (
+        <div>
+          <p>
+            <b>Diagnoses:</b>
+          </p>
+          <ul>
+            {entry.diagnosisCodes?.map((code) => (
+              <li key={code}>
+                {code}{' '}
+                {diagnoses.find((d) => d.code === code)?.name ||
+                  'Diagnosis is undefined'}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <p>
+        <b>Specialist:</b> {entry.specialist}
+      </p>
     </div>
   );
 };

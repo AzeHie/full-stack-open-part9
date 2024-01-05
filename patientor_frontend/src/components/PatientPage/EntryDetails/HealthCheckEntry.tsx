@@ -1,3 +1,6 @@
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 import { Diagnosis, HealthCheckEntry } from '../../../types';
 
 import './HealthCheckEntry.css';
@@ -8,12 +11,27 @@ interface Props {
 }
 
 const HealthCheckEntryComponent = ({ entry, diagnoses }: Props) => {
+  const healthRate = entry.healthCheckRating;
+
+  let healthRateStyle;
+
+  if (healthRate === 3) {
+    healthRateStyle = { color: "red" };
+  } else if (healthRate === 2) {
+    healthRateStyle = { color: "orange" };
+  } else if (healthRate === 1) {
+    healthRateStyle = { color: "yellow" };
+  } else {
+    healthRateStyle = { color: "green" };
+  }
+
   return (
     <div className='healthCheckEntry__container'>
-        <h4>Specialist: {entry.specialist} ({entry.type})</h4>
+      <p>{entry.date} <MonitorHeartIcon style={{ color: 'darkgreen' }} /></p>
       <p>
-        {entry.date} {entry.description}
+         <i>{entry.description}</i>
       </p>
+      <FavoriteIcon style={healthRateStyle} />
       <ul>
         {entry.diagnosisCodes?.map((code) => (
           <li key={code}>
@@ -23,6 +41,7 @@ const HealthCheckEntryComponent = ({ entry, diagnoses }: Props) => {
           </li>
         ))}
       </ul>
+      <p><b>Specialist:</b> <i>{entry.specialist} </i></p>
     </div>
   );
 };
