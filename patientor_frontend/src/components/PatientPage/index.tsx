@@ -9,6 +9,7 @@ import patientService from '../../services/patients';
 import EntryDetails from './EntryDetails/index';
 
 import './index.css';
+import AddEntryForm from './AddEntryForm';
 
 interface PatientPageProps {
   diagnoses: Diagnosis[];
@@ -18,6 +19,7 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
   const { id } = useParams<{ id: string }>();
   const [patientDetails, setPatientDetails] = useState<Patient>();
   const [genderIcon, setGenderIcon] = useState<React.ReactElement | null>(null);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPatientById = async () => {
@@ -53,6 +55,9 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
       <p>ssn: {patientDetails.ssn}</p>
       <p>occupation: {patientDetails.occupation}</p>
       <div>
+        {!showForm && <button onClick={() => setShowForm(true)}>Add new entry</button>}
+        {showForm && <AddEntryForm setShowForm={setShowForm} />}
+      </div>
         {patientDetails.entries.length > 0 && (
           <div>
             <h3>entries</h3>
@@ -62,7 +67,6 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
             />
           </div>
         )}
-      </div>
     </div>
   );
 };
