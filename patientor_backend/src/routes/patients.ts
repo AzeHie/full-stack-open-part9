@@ -41,7 +41,6 @@ router.get('/:id', (req, res) => {
   try {
     const patientDetails = patientService.getPatientDetails(id);
 
-    console.log(patientDetails);
     res.status(200).json(patientDetails);
   } catch (err) {
     let errorMessage = 'Something went wrong';

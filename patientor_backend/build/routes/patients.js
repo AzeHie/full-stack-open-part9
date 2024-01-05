@@ -37,7 +37,6 @@ router.get('/:id', (req, res) => {
     const id = req.params.id;
     try {
         const patientDetails = patientService_1.default.getPatientDetails(id);
-        console.log(patientDetails);
         res.status(200).json(patientDetails);
     }
     catch (err) {

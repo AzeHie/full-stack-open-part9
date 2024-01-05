@@ -108,7 +108,6 @@ const parseDischarge = (
 };
 
 const parseSickLeave = (object: unknown): { startDate: string; endDate: string } => {
-  console.log(object);
   if (
     !object ||
     typeof object !== 'object' ||
@@ -233,11 +232,11 @@ export const toNewHealthCareEntry = (object: unknown): Entry => {
 
     if('type' in object) {
       switch(object.type) {
-        case 'hospital':
+        case 'Hospital':
           return parseHospitalEntry(newEntry);
-        case 'occupationalHealthCare':
+        case 'OccupationalHealthCare':
           return parseOccupationalHealthCareEntry(newEntry);
-        case 'healthCheck':
+        case 'HealthCheck':
           return parseHealthCheckEntry(newEntry);
         default:
           throw new Error('Bad type of entry, check details and try again!');

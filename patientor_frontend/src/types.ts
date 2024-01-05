@@ -8,7 +8,7 @@ export interface Entry {
 }
 
 export interface HospitalEntry extends Entry {
-  type: "hospital";
+  type: "Hospital";
   discharge: {
     date: string;
     criteria: string;
@@ -16,7 +16,7 @@ export interface HospitalEntry extends Entry {
 }
 
 export interface OccupationHealthcareEntry extends Entry {
-  type: "occupationalHealthCare";
+  type: "OccupationalHealthCare";
   employerName: string;
   sickLeave?: {
     startDate: string;
