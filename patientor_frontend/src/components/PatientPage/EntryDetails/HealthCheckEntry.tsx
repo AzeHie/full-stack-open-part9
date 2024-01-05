@@ -16,32 +16,41 @@ const HealthCheckEntryComponent = ({ entry, diagnoses }: Props) => {
   let healthRateStyle;
 
   if (healthRate === 3) {
-    healthRateStyle = { color: "red" };
+    healthRateStyle = { color: 'red' };
   } else if (healthRate === 2) {
-    healthRateStyle = { color: "orange" };
+    healthRateStyle = { color: 'orange' };
   } else if (healthRate === 1) {
-    healthRateStyle = { color: "yellow" };
+    healthRateStyle = { color: 'yellow' };
   } else {
-    healthRateStyle = { color: "green" };
+    healthRateStyle = { color: 'green' };
   }
 
   return (
     <div className='healthCheckEntry__container'>
-      <p>{entry.date} <MonitorHeartIcon style={{ color: 'darkgreen' }} /></p>
       <p>
-         <i>{entry.description}</i>
+        {entry.date} <MonitorHeartIcon style={{ color: 'darkgreen' }} />
+      </p>
+      <p>
+        <i>{entry.description}</i>
       </p>
       <FavoriteIcon style={healthRateStyle} />
-      <ul>
-        {entry.diagnosisCodes?.map((code) => (
-          <li key={code}>
-            {code}{' '}
-            {diagnoses.find((d) => d.code === code)?.name ||
-              'Diagnosis is undefined'}
-          </li>
-        ))}
-      </ul>
-      <p><b>Specialist:</b> <i>{entry.specialist} </i></p>
+      {entry.diagnosisCodes && (
+        <div>
+          <h4>Diagnoses:</h4>
+          <ul>
+            {entry.diagnosisCodes?.map((code) => (
+              <li key={code}>
+                {code}{' '}
+                {diagnoses.find((d) => d.code === code)?.name ||
+                  'Diagnosis is undefined'}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <p>
+        <b>Specialist:</b> <i>{entry.specialist} </i>
+      </p>
     </div>
   );
 };
