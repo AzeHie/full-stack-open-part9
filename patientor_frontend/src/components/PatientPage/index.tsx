@@ -27,25 +27,38 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
         return <div>Could not fetch patient details with given ID..</div>;
       }
 
-      const patientData = await patientService.getPatientById(id);
+      try {
+        const patientData = await patientService.getPatientById(id);
 
-      if (patientData.gender === 'other') {
-        setGenderIcon(<FaGenderless />);
-      } else if (patientData.gender === 'male') {
-        setGenderIcon(<CgGenderMale />);
-      } else {
-        setGenderIcon(<CgGenderFemale />);
+        if (patientData.gender === 'other') {
+          setGenderIcon(<FaGenderless />);
+        } else if (patientData.gender === 'male') {
+          setGenderIcon(<CgGenderMale />);
+        } else {
+          setGenderIcon(<CgGenderFemale />);
+        }
+  
+        setPatientDetails(patientData);
+      } catch (err) {
+        console.log(err);
       }
-
-      setPatientDetails(patientData);
     };
 
     fetchPatientById();
   }, [id]);
 
-  if (!patientDetails) {
-    return <div>Loading..</div>;
+  if (!id || !patientDetails) {
+    return <div>Loading or error..</div>;
   }
+
+  const reFetchPatientData = async () => {
+    try {
+      const patientData = await patientService.getPatientById(id);
+      setPatientDetails(patientData);
+    } catch (err) {
+      console.log('something went wrong');
+    }
+  };
 
   return (
     <div className='patient-page__container'>
@@ -56,7 +69,7 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
       <p>occupation: {patientDetails.occupation}</p>
       <div>
         {!showForm && <button onClick={() => setShowForm(true)}>Add new entry</button>}
-        {showForm && <AddEntryForm setShowForm={setShowForm} />}
+        {showForm && <AddEntryForm setShowForm={setShowForm} reFetchPatientData={reFetchPatientData} patientId={id} />}
       </div>
         {patientDetails.entries.length > 0 && (
           <div>

@@ -1,0 +1,22 @@
+.entry-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-form label {
+  margin-top: 7px;
+  margin-bottom: 2px;
+}
+
+.entry-form button {
+  width: 30%;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.entry-form .entry-form__submit-buttons {
+  /* to overwrite first definition in this file */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

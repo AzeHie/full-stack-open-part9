@@ -1,5 +1,5 @@
-export interface Entry {
-  id?: string;
+export interface BaseEntry {
+  id: string;
   date: string;
   type: string;
   specialist: string;
@@ -7,7 +7,7 @@ export interface Entry {
   diagnosisCodes?: Array<Diagnosis['code']>
 }
 
-export interface HospitalEntry extends Entry {
+export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
   discharge: {
     date: string;
@@ -15,7 +15,7 @@ export interface HospitalEntry extends Entry {
   }
 }
 
-export interface OccupationHealthcareEntry extends Entry {
+export interface OccupationHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthCare";
   employerName: string;
   sickLeave?: {
@@ -31,10 +31,12 @@ export enum HealthCheckRating {
   "CriticalRisk" = 3
 }
 
-export interface HealthCheckEntry extends Entry {
+export interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
 }
+
+export type Entry = | HospitalEntry | OccupationHealthcareEntry | HealthCheckEntry;
 
 export interface Diagnosis {
   code: string;
@@ -59,3 +61,4 @@ export interface Patient {
 }
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+export type EntryFormValues = Omit<Entry, "id">;
