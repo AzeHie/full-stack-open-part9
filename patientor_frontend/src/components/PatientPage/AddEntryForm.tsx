@@ -2,6 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   SyntheticEvent,
+  useContext,
   useRef,
   useState,
 } from 'react';
@@ -10,6 +11,7 @@ import patientService from '../../services/patients';
 
 import './AddEntryForm.css';
 import { EntryFormValues } from '../../types';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 interface Props {
   setShowForm: Dispatch<SetStateAction<boolean>>;
@@ -21,7 +23,6 @@ interface Props {
 
 const AddEntryForm = ({ setShowForm, reFetchPatientData, patientId }: Props) => {
   const diagnosisCodeRef = useRef<HTMLInputElement | null>(null);
-
   const [formData, setFormData] = useState({
     date: '',
     type: '',
@@ -33,6 +34,8 @@ const AddEntryForm = ({ setShowForm, reFetchPatientData, patientId }: Props) => 
       criteria: '',
     },
   });
+
+  const { newNotification } = useContext(NotificationContext);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -62,20 +65,16 @@ const AddEntryForm = ({ setShowForm, reFetchPatientData, patientId }: Props) => 
     }
   };
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     if (formData.type === 'Hospital' || formData.type === 'OccupationalHealthCare' || formData.type === 'HealthCheck') {
       const entryData = formData as EntryFormValues;
 
-      try {
-        patientService.addNewEntry(entryData, patientId);
+      await patientService.addNewEntry(entryData, patientId, newNotification);
   
-        reFetchPatientData();
-        setShowForm(false);
-      } catch (err) {
-        console.log('something went wrong!');
-      }
+      reFetchPatientData();
+      setShowForm(false);
     }
   };
 
@@ -131,7 +130,7 @@ const AddEntryForm = ({ setShowForm, reFetchPatientData, patientId }: Props) => 
           name='diagnosisCodes'
           ref={diagnosisCodeRef}
         />
-        <button onClick={() => addNewDiagnosisCode(diagnosisCodeRef.current)}>
+        <button type='button' onClick={() => addNewDiagnosisCode(diagnosisCodeRef.current)}>
           Add diagnosis
         </button>
         {formData.diagnosisCodes.length > 0 && (

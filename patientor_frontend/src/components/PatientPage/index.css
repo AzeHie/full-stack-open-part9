@@ -1,3 +1,7 @@
 .patient-page__container {
   margin-top: 10px;
 }
+
+.patient-page__container button {
+  cursor: pointer;
+}

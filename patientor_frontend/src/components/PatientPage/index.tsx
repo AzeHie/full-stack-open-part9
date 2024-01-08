@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Diagnosis, Patient } from '../../types';
 import { FaGenderless } from 'react-icons/fa';
@@ -10,6 +10,7 @@ import EntryDetails from './EntryDetails/index';
 
 import './index.css';
 import AddEntryForm from './AddEntryForm';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 interface PatientPageProps {
   diagnoses: Diagnosis[];
@@ -21,6 +22,8 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
   const [genderIcon, setGenderIcon] = useState<React.ReactElement | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
 
+  const { newNotification } = useContext(NotificationContext);
+
   useEffect(() => {
     const fetchPatientById = async () => {
       if (!id) {
@@ -28,7 +31,11 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
       }
 
       try {
-        const patientData = await patientService.getPatientById(id);
+        const patientData = await patientService.getPatientById(id, newNotification);
+
+        if(!patientData) {
+          return <div>Error! Failed to fetch patient details!</div>;
+        }
 
         if (patientData.gender === 'other') {
           setGenderIcon(<FaGenderless />);
@@ -45,7 +52,7 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
     };
 
     fetchPatientById();
-  }, [id]);
+  }, [id, newNotification]);
 
   if (!id || !patientDetails) {
     return <div>Loading or error..</div>;
@@ -53,7 +60,7 @@ const PatientPage = ({ diagnoses }: PatientPageProps) => {
 
   const reFetchPatientData = async () => {
     try {
-      const patientData = await patientService.getPatientById(id);
+      const patientData = await patientService.getPatientById(id, newNotification);
       setPatientDetails(patientData);
     } catch (err) {
       console.log('something went wrong');
