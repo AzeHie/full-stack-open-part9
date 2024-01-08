@@ -12,6 +12,9 @@ import patientService from '../../../../services/patients';
 import './AddEntryForm.css';
 import { EntryFormValues, EntryType } from '../../../../types';
 import { NotificationContext } from '../../../../contexts/NotificationContext';
+import HealthCareEntryForm from './HealthCareEntryForm';
+import HospitalEntryForm from './HospitalEntryForm';
+import OccupationalEntryForm from './OccupationalEntryForm';
 
 interface Props {
   setShowForm: Dispatch<SetStateAction<boolean>>;
@@ -68,46 +71,6 @@ const AddEntryForm = ({
     } else {
       setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     }
-  };
-
-  const handleHospitalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    const discharge = name.split('-')[1];
-    setHospitalFormData((prevFormData) => ({
-      ...prevFormData,
-      [discharge]: value,
-    }));
-  };
-
-  const handleOccupationalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    console.log(name);
-
-    if (name.startsWith('sickleave-')) {
-      // CHATGPT LOOK THIS!!!
-      const sickLeaveProperty = name.split('-')[1];
-      setOccupationalFormData((prevFormData) => ({
-        ...prevFormData,
-        sickLeave: {
-          ...prevFormData.sickLeave,
-          [sickLeaveProperty]: value,
-        },
-      }));
-    } else {
-      setOccupationalFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleHealthCheckChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setHealthCheckFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
   };
 
   const addNewDiagnosisCode = (newDiagnosisCode: HTMLInputElement | null) => {
@@ -236,71 +199,22 @@ const AddEntryForm = ({
         )}
       </div>
       {formData.type === 'Hospital' && (
-        <div>
-          <h4>Discharge:</h4>
-          <label htmlFor='discharge-date'>Date:</label>
-          <input
-            type='date'
-            id='discharge-date'
-            name='discharge-date'
-            value={hospitalFormData.discharge.date}
-            onChange={handleHospitalChange}
-          />
-          <label htmlFor='discharge-criteria'>Criteria:</label>
-          <input
-            type='text'
-            id='discharge-criteria'
-            name='discharge-criteria'
-            value={hospitalFormData.discharge.criteria}
-            onChange={handleHospitalChange}
-          />
-        </div>
+        <HospitalEntryForm
+          hospitalFormData={hospitalFormData}
+          setHospitalFormData={setHospitalFormData}
+        />
       )}
       {formData.type === 'OccupationalHealthCare' && (
-        <div>
-          <label htmlFor='employername'>Employer:</label>
-          <input
-            type='text'
-            id='employername'
-            name='employerName'
-            value={occupationalFormData.employerName}
-            onChange={handleOccupationalChange}
-          />
-          <p>Sick leave (optional):</p>
-          <label htmlFor='sickleave-startDate'>Start date:</label>
-          <input
-            type='date'
-            id='sickleave-startDate'
-            name='sickleave-startDate'
-            value={occupationalFormData.sickLeave.startDate}
-            onChange={handleOccupationalChange}
-          />
-          <label htmlFor='sickleave-endDate'>End date:</label>
-          <input
-            type='date'
-            id='sickleave-endDate'
-            name='sickleave-endDate'
-            value={occupationalFormData.sickLeave.endDate}
-            onChange={handleOccupationalChange}
-          />
-        </div>
+        <OccupationalEntryForm
+          occupationalFormData={occupationalFormData}
+          setOccupationalFormData={setOccupationalFormData}
+        />
       )}
       {formData.type === 'HealthCheck' && (
-        <div>
-          <label htmlFor='healthCheckRating'>Health check rating:</label>
-          <select
-            id='healthCheckRating'
-            name='healthCheckRating'
-            value={healthCheckFormData.healthCheckRating}
-            onChange={handleHealthCheckChange}
-          >
-            <option value=''>Select health rating</option>
-            <option value='Healthy'>Healthy</option>
-            <option value='LowRisk'>LowRisk</option>
-            <option value='HighRisk'>HighRisk</option>
-            <option value='CriticalRisk'>CriticalRisk</option>
-          </select>
-        </div>
+        <HealthCareEntryForm
+          healthCheckFormData={healthCheckFormData}
+          setHealthCheckFormData={setHealthCheckFormData}
+        />
       )}
       <div className='entry-form__submit-buttons'>
         <button>Save</button>
