@@ -32,7 +32,7 @@ const EntryDetails = ({ entries, diagnoses }: EntryDetailsProps) => {
                 diagnoses={diagnoses}
               />
             );
-          case 'OccupationalHealthcare':
+          case 'OccupationalHealthCare':
             return (
               <OccupationalHealthcareEntryComponent
                 key={entry.id}

@@ -9,7 +9,7 @@ import patientService from '../../services/patients';
 import EntryDetails from './EntryDetails/index';
 
 import './index.css';
-import AddEntryForm from './AddEntryForm';
+import AddEntryForm from './EntryDetails/AddEntryForm/AddEntryForm';
 import { NotificationContext } from '../../contexts/NotificationContext';
 
 interface PatientPageProps {

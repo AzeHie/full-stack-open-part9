@@ -9,11 +9,12 @@ const getAll = async (newNotification: (message: string) => void) => {
 
     return data;
   } catch (err) {
-    let errorMessage = 'Failed to fetch patients!';
-    if (err instanceof Error) {
-      errorMessage += ` Error: ${err.message}`;
+    if (axios.isAxiosError(err) && err.response) {
+      newNotification(`Failed to add new entry. ${err.response.data}`);
+    } else {
+      console.error(err);
+      newNotification('Failed to fetch patients!');
     }
-    newNotification(errorMessage);
   }
 };
 
@@ -26,11 +27,12 @@ const getPatientById = async (
 
     return data;
   } catch (err) {
-    let errorMessage = 'Failed to fetch patient';
-    if (err instanceof Error) {
-      errorMessage += ` Error: ${err.message}`;
+    if (axios.isAxiosError(err) && err.response) {
+      newNotification(`Failed to fetch patient by given id. ${err.response.data}`);
+    } else {
+      console.error(err);
+      newNotification('Failed to fetch patient by given id.');
     }
-    newNotification(errorMessage);
   }
 };
 
@@ -46,11 +48,11 @@ const create = async (
 
     return data;
   } catch (err) {
-    let errorMessage = 'Failed to add new entry';
-    if (err instanceof Error) {
-      errorMessage += ` Error: ${err.message}`;
+    if (axios.isAxiosError(err) && err.response) {
+      newNotification(`Failed to add new patient. ${err.response.data}`);
+    } else {
+      newNotification('Failed to add new patient');
     }
-    newNotification(errorMessage);
   }
 };
 
@@ -60,6 +62,7 @@ const addNewEntry = async (
   newNotification: (message: string) => void
 ) => {
   try {
+    console.log('object ', object);
     const { data } = await axios.post<Entry>(
       `${apiBaseUrl}/patients/${patientId}/entries`,
       object
@@ -67,11 +70,11 @@ const addNewEntry = async (
 
     return data;
   } catch (err) {
-    let errorMessage = 'Failed to add new entry';
-    if (err instanceof Error) {
-      errorMessage += ` Error: ${err.message}`;
+    if (axios.isAxiosError(err) && err.response) {
+      newNotification(`Failed to add new entry. ${err.response.data}`);
+    } else {
+      newNotification('Failed to add new entry');
     }
-    newNotification(errorMessage);
   }
 };
 

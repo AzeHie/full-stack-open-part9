@@ -53,6 +53,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id/entries', (req, res) => {
   try {
+    console.log(req.body);
     const patientId = req.params.id;
     const newEntry = toNewHealthCareEntry(req.body);
 

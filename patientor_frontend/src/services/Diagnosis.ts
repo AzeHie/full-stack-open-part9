@@ -9,11 +9,12 @@ const getAll = async (newNotification: (message: string) => void) => {
 
     return data;
   } catch (err) {
-    let errorMessage = 'Failed to fetch diagnoses';
-    if (err instanceof Error) {
-      errorMessage += ` Error: ${err.message}`;
+    if (axios.isAxiosError(err) && err.response) {
+      newNotification(`Failed to fetch diagnoses. ${err.response.data}`);
+    } else {
+      console.error(err);
+      newNotification('Failed to fetch diagnoses');
     }
-    newNotification(errorMessage);
   }
 };
 

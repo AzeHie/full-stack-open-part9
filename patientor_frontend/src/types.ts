@@ -38,6 +38,8 @@ export interface HealthCheckEntry extends BaseEntry {
 
 export type Entry = | HospitalEntry | OccupationHealthcareEntry | HealthCheckEntry;
 
+export type EntryType = "Hospital" | "OccupationalHealthCare" | "HealthCheck";
+
 export interface Diagnosis {
   code: string;
   name: string;
